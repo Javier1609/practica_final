@@ -1,54 +1,85 @@
 package model;
 
 public class Food {
-    private String name;
-    private int quantity;
-    private int day;
-    private String experimentName;
 
-    public Food() {
-        if (quantity < 0 || quantity >= 300) {
-            throw new IllegalArgumentException("Quantity must be an integer less than 300");
+    private int initialFoodAmount;
+    private int increaseUntilDay;
+    private int foodAmountOnIncreaseDay;
+    private int decreaseStartDay;
+    private int finalFoodAmount;
+
+    public Food(int initialFoodAmount, int increaseUntilDay, int foodAmountOnIncreaseDay, int decreaseStartDay, int finalFoodAmount) {
+        this.initialFoodAmount = initialFoodAmount;
+        this.increaseUntilDay = increaseUntilDay;
+        this.foodAmountOnIncreaseDay = foodAmountOnIncreaseDay;
+        this.decreaseStartDay = decreaseStartDay;
+        this.finalFoodAmount = finalFoodAmount;
+    }
+
+    public int getInitialFoodAmount() {
+        return this.initialFoodAmount;
+    }
+
+    public int getIncreaseUntilDay() {
+        return this.increaseUntilDay;
+    }
+
+    public int getFoodAmountOnIncreaseDay() {
+        return this.foodAmountOnIncreaseDay;
+    }
+
+    public int getDecreaseStartDay() {
+        return this.decreaseStartDay;
+    }
+
+    public int getFinalFoodAmount() {
+        return this.finalFoodAmount;
+    }
+
+    public double getFoodAmountOnDay(int day) {
+        double[] foodPerDay = calculateFood();
+        return foodPerDay[day - 1];
+    }
+
+    private double[] calculateFood() {
+        double[] foodPerDay = new double[30];
+        foodPerDay[0] = initialFoodAmount;
+
+        double dailyIncrease1 = (foodAmountOnIncreaseDay - initialFoodAmount) / (double)(increaseUntilDay - 1);
+        for (int i = 1; i < increaseUntilDay; i++) {
+            foodPerDay[i] = foodPerDay[i - 1] + dailyIncrease1;
         }
-        this.name = name;
-        this.quantity = quantity;
-        this.day = day;
-        this.experimentName = experimentName;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        if (quantity < 0 || quantity >= 300) {
-            throw new IllegalArgumentException("Quantity must be an integer less than 300");
+        double dailyIncrease2 = (finalFoodAmount - foodAmountOnIncreaseDay) / (double)(decreaseStartDay - increaseUntilDay);
+        for (int i = increaseUntilDay; i < decreaseStartDay; i++) {
+            foodPerDay[i] = foodPerDay[i - 1] + dailyIncrease2;
         }
-        this.quantity = quantity;
+
+        double dailyDecrease = (finalFoodAmount - foodPerDay[decreaseStartDay - 1]) / (double)(30 - decreaseStartDay);
+        for (int i = decreaseStartDay; i < 30; i++) {
+            foodPerDay[i] = foodPerDay[i - 1] - dailyDecrease;
+        }
+
+        return foodPerDay;
     }
 
-    public int getDay() {
-        return day;
+    public void printAndShowFood() {
+        double[] foodPerDay = calculateFood();
+        StringBuilder foodPerDayStr = new StringBuilder();
+        for (int i = 0; i < foodPerDay.length; i++) {
+            foodPerDayStr.append("Day ").append(i + 1).append(": ").append(foodPerDay[i]).append("\n");
+        }
+        System.out.println(foodPerDayStr.toString());
     }
 
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public String getExperimentName() {
-        return experimentName;
-    }
-
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    @Override
+    public String toString() {
+        return "{" +
+                "Initial food amount=" + initialFoodAmount +
+                ", Day until which food increases=" + increaseUntilDay +
+                ", Food on increase day=" + foodAmountOnIncreaseDay +
+                ", Day when food starts to decrease=" + decreaseStartDay +
+                ", Final food amount on day 30=" + finalFoodAmount +
+                '}';
     }
 }
