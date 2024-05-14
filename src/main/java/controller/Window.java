@@ -15,7 +15,7 @@ public class Window extends JFrame {
         manejoExperimento = new manejoesp_Impl();
 
         setTitle("Gestor de cultivo de bacterias");
-        setSize(800, 600); // Ajusta el tamaño de la ventana
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -23,7 +23,7 @@ public class Window extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-        // Crear un nuevo botón para cerrar la aplicación
+
         JButton closeButton = new JButton("Cerrar aplicación");
         closeButton.addActionListener(new ActionListener() {
             @Override
