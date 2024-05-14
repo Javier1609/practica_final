@@ -32,7 +32,7 @@ public class Window extends JFrame {
             }
         });
 
-        // Agregar el botón al panel principal
+
         getContentPane().add(closeButton, BorderLayout.SOUTH);
     }
 
