@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0ace0a8-5334-4683-9732-048b6a8c668d" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Panel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Window.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/bacteriaven.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/manejoesp_Impl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Food.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Food.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ventana.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ventana.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Manejoex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Manejoex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bacteria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bacteria.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/comida.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/comida.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/experimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/experimento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/manejo_ex.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +42,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Window.executor": "Run",
     "Application.pantalla.executor": "Run",
     "Application.ventanamain.executor": "Run",
     "Application.window.executor": "Run",
@@ -67,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715502528153</updated>
       <workItem from="1715502529169" duration="7654000" />
-      <workItem from="1715588527678" duration="14920000" />
+      <workItem from="1715588527678" duration="18428000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -125,7 +133,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715613489350</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".">
+      <option name="closed" value="true" />
+      <created>1715676241639</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715676241639</updated>
+    </task>
+    <task id="LOCAL-00009" summary=".">
+      <option name="closed" value="true" />
+      <created>1715676358276</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715676358276</updated>
+    </task>
+    <task id="LOCAL-00010" summary=".">
+      <option name="closed" value="true" />
+      <created>1715676424003</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715676424003</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
