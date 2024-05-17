@@ -1,4 +1,3 @@
-
 package model;
 
 import javax.swing.*;
@@ -15,8 +14,8 @@ public class bacteriaven extends JFrame {
     private manejoesp_Impl manejoEx;
     private JTextField[] textFields;
     private String[] labels = {"Nombre de la población:",
-            "Fecha de comienzo (dd/mm/aaaa ):",
-            "Fecha de fin (dd/mm/aaaa ):",
+            "Fecha de comienzo (dd/MM/yyyy):",
+            "Fecha de fin (dd/MM/yyyy):",
             "Número de bacterias iniciales:",
             "Temperatura máxima a la que son sometidas las bacterias (°C):",
             "Condiciones de luminosidad (Alta, Media, Baja):",
@@ -58,7 +57,6 @@ public class bacteriaven extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                // Mostrar un mensaje que indica que los cambios han sido guardados
                 JOptionPane.showMessageDialog(null, "Cambios guardados.", "Información", JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -74,12 +72,11 @@ public class bacteriaven extends JFrame {
                     File fileToSave = fileChooser.getSelectedFile();
                     bacteria poblacion = createPopulationFromInput();
                     if (poblacion != null) {
-                        // Escribir la información de la población en el archivo seleccionado
                         try (PrintWriter out = new PrintWriter(new FileOutputStream(fileToSave, true))) {
                             out.println("Información de la población:");
                             out.println("Nombre: " + poblacion.getNombre());
-                            out.println("Fecha de inicio: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(poblacion.getStartDate()));
-                            out.println("Fecha de fin: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(poblacion.getEndDate()));
+                            out.println("Fecha de inicio: " + new SimpleDateFormat("dd/MM/yyyy").format(poblacion.getStartDate()));
+                            out.println("Fecha de fin: " + new SimpleDateFormat("dd/MM/yyyy").format(poblacion.getEndDate()));
                             out.println("Número de bacterias iniciales: " + poblacion.getInitialBacteriaCount());
                             out.println("Temperatura máxima a la que son sometidas las bacterias (°C): " + poblacion.getTemp());
                             out.println("Condiciones de luminosidad: " + poblacion.getCondicionesLuminosidad());
@@ -103,11 +100,12 @@ public class bacteriaven extends JFrame {
     public bacteria createPopulationFromInput() {
         try {
             String populationName = textFields[0].getText();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            formatter.setLenient(false); // Esto hará que el SimpleDateFormat sea estricto en su análisis
+
             Date startDate = formatter.parse(textFields[1].getText());
             Date endDate = formatter.parse(textFields[2].getText());
 
-            // Comprobar que la duración de la población es exactamente de 30 días
             long duration = endDate.getTime() - startDate.getTime();
             long durationInDays = TimeUnit.MILLISECONDS.toDays(duration);
             if (durationInDays != 30) {
@@ -124,10 +122,8 @@ public class bacteriaven extends JFrame {
             int cantidadFinalComidaDia30 = Integer.parseInt(textFields[9].getText());
             comida organizacionComida = new comida(cantidadInicialComida, diaIncrementoComida, comidaDiaIncremento, cantidadFinalComidaDia30);
             return new bacteria(populationName, startDate, endDate, initialBacteriaCount, temp, condicionesLuminosidad, organizacionComida);
-        } catch (ParseException parseException) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese las fechas en el formato correcto (dd/MM/yyyy HH:mm:ss).", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (NumberFormatException numberFormatException) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese los números en el formato correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese las fechas en el formato correcto (dd/MM/yyyy).", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

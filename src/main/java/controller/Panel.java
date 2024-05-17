@@ -1,7 +1,9 @@
-
 package controller;
 
+import model.experimento;
+import model.manejoesp_Impl;
 import model.*;
+
 
 
 import javax.swing.*;
@@ -78,9 +80,9 @@ public class Panel extends JPanel {
                         }
                         break;
                     case "Agregar población de bacterias":
-                        bacteriaven bacteriaven = new bacteriaven(manejoExperimento);
-                        bacteriaven.setLocationRelativeTo(null);
-                        bacteriaven.setVisible(true);
+                        bacteriaven poblacionBacteriaWindow = new bacteriaven(manejoExperimento);
+                        poblacionBacteriaWindow.setLocationRelativeTo(null);
+                        poblacionBacteriaWindow.setVisible(true);
 
                         // Cuando el usuario haga clic en el botón "Guardar como"
                         JButton saveAsButton = new JButton("Guardar como");
@@ -94,7 +96,7 @@ public class Panel extends JPanel {
 
                                     // Escribir la información de la población en el archivo seleccionado
                                     try (PrintWriter out = new PrintWriter(new FileOutputStream(selectedFile, true))) {
-                                        bacteria poblacion = bacteriaven.createPopulationFromInput();
+                                        bacteria poblacion = poblacionBacteriaWindow.createPopulationFromInput();
                                         if (poblacion != null) {
                                             out.println("Información de la población:");
                                             out.println("Nombre: " + poblacion.getNombre()); // Obtiene el nombre de la población directamente de la población
@@ -166,19 +168,37 @@ public class Panel extends JPanel {
                         if (userSelection == JFileChooser.APPROVE_OPTION) {
                             File fileToOpen = fileChooser.getSelectedFile();
                             try (Scanner scanner = new Scanner(fileToOpen)) {
-                                StringBuilder populations = new StringBuilder();
+                                StringBuilder experimentContent = new StringBuilder();
                                 while (scanner.hasNextLine()) {
                                     String line = scanner.nextLine();
-                                    if (line.startsWith("Nombre: ")) {
-                                        populations.append(line.substring(8)).append(", ");
+                                    experimentContent.append(line).append("\n");
+                                }
+
+                                // Create a new JFrame to display the content of the file
+                                JFrame editWindow = new JFrame("Editar experimento");
+                                editWindow.setSize(500, 500);
+                                editWindow.setLocationRelativeTo(null);
+
+                                // Create a JTextArea to display and edit the content of the file
+                                JTextArea textArea = new JTextArea(experimentContent.toString());
+                                JScrollPane scrollPane = new JScrollPane(textArea);
+                                editWindow.add(scrollPane);
+
+                                // Create a "Save" button to save the changes to the file
+                                JButton saveButton = new JButton("Guardar");
+                                saveButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        try (PrintWriter out = new PrintWriter(fileToOpen)) {
+                                            out.print(textArea.getText());
+                                        } catch (FileNotFoundException ex) {
+                                            ex.printStackTrace();
+                                        }
                                     }
-                                }
-                                if (populations.length() > 0) {
-                                    populations.setLength(populations.length() - 2);  // Remove the last comma and space
-                                    JOptionPane.showMessageDialog(null, "Poblaciones en el experimento: " + populations, "Poblaciones", JOptionPane.INFORMATION_MESSAGE);
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "No se encontraron poblaciones en el experimento.", "Poblaciones", JOptionPane.INFORMATION_MESSAGE);
-                                }
+                                });
+                                editWindow.add(saveButton, BorderLayout.SOUTH);
+
+                                editWindow.setVisible(true);
                             } catch (FileNotFoundException ex) {
                                 ex.printStackTrace();
                             }

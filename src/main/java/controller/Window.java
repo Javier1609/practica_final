@@ -1,4 +1,3 @@
-
 package controller;
 
 import model.*;
@@ -7,15 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Window extends JFrame {
     private manejoesp_Impl manejoExperimento;
 
     public Window() {
-        manejoExperimento = new manejoesp_Impl();
+        manejoExperimento = createManejoEspImplInstance();
 
         setTitle("Gestor de cultivo de bacterias");
-        setSize(800, 600);
+        setSize(600, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -23,24 +25,26 @@ public class Window extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-
         JButton closeButton = new JButton("Cerrar aplicación");
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
+        closeButton.addActionListener(e -> System.exit(0));
 
         getContentPane().add(closeButton, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Window().setVisible(true);
+    private manejoesp_Impl createManejoEspImplInstance() {
+        return new manejoesp_Impl() {
+            @Override
+            public void saveExperiment(manejoesp_Impl experiment) {
+                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("experiment.ser"))) {
+                    oos.writeObject(experiment);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        };
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Window().setVisible(true));
     }
 }

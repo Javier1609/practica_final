@@ -1,4 +1,3 @@
-
 package model;
 
 import java.io.IOException;
@@ -6,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class manejoesp_Impl implements Manejoex {
+public abstract class manejoesp_Impl implements Manejoex {
     private List<experimento> experiments;
 
-    public void manejoesp_lmpl() {
+    public manejoesp_Impl() {
         experiments = new ArrayList<>();
     }
 

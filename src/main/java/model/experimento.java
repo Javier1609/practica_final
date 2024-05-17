@@ -1,10 +1,10 @@
-
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class experimento {
+public class experimento implements Serializable {
     private String nombreArchivo;
     private String descripcion;
     private List<bacteria> poblaciones;
